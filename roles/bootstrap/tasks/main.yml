@@ -1,0 +1,22 @@
+---
+- name: update yum
+  yum:
+    name=*
+    state=latest
+  when: env != "vagrant"
+  tags:
+    - yum
+
+- include_tasks: user.yml
+  when: env != "vagrant"
+
+- include_tasks: ssh.yml
+  when: env != "vagrant"
+
+- include_tasks: centos6.yml
+  when: os.version == "6"
+
+- include_tasks: centos7.yml
+  when: os.version == "7"
+
+- include_tasks: ../os/reboot/tasks/main.yml

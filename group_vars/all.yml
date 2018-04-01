@@ -1,0 +1,11 @@
+os:
+  version: "7"
+  timezone: "Asia/Tokyo"
+
+php:
+  max_execution_time: "120"
+  request_terminate_timeout: "120s"
+
+nginx:
+  fastcgi_read_timeout: "120"
+  port: 80

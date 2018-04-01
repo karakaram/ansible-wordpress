@@ -1,0 +1,21 @@
+---
+- hosts: wordpress
+  user: "{{ user.name }}"
+  become: yes
+  gather_facts: yes
+  roles:
+    - os/tcp_wrapper
+    - os/chrony
+    - os/selinux
+    - os/lastlog
+    - os/timezone
+    - os/vim
+    - mysql57
+    - certbot
+    - nginx/install
+    - nginx/wordpress
+    - nginx/cashbook
+    - php
+    - cron
+    - postfix
+    - os/reboot

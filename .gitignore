@@ -1,0 +1,4 @@
+*.retry
+roles/nginx/wordpress/files/dhparam.pem
+roles/nginx/wordpress/files/server.key
+roles/nginx/wordpress/files/server.pem

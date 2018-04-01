@@ -1,0 +1,83 @@
+- name: create work user's bin directory
+  file:
+    path: "/home/{{ user.name }}/bin"
+    state: directory
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+
+- name: download wp-cli
+  get_url:
+    url: https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+    dest: "/home/{{ user.name }}/bin/wp"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: 0755
+
+- name: copy wp-cron.sh
+  template:
+    src: wp-cron.sh.j2
+    dest: "/home/{{ user.name }}/bin/wp-cron"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: 0755
+
+- name: wp-cron
+  cron:
+    name: wp-cron
+    user: "{{ user.name }}"
+    minute: "*/15"
+    job: "source /home/{{ user.name }}/.bash_profile && /home/{{ user.name }}/bin/wp-cron >/dev/null 2>&1"
+    state: present
+  tags: crontab
+
+- name: wp-social-share-count
+  cron:
+    name: wp-social-share-count
+    user: "{{ user.name }}"
+    hour: "2,14"
+    minute: "0"
+    job: "/usr/bin/php /var/www/{{ wordpress.host }}/wp-content/plugins/social-share-count-db/social-share-count-db-job.php >/dev/null 2>&1"
+    state: present
+  tags: crontab
+
+- name: wp-google-analytics
+  cron:
+    name: wp-google-analytics
+    user: "{{ user.name }}"
+    hour: "5"
+    minute: "5"
+    job: "/usr/bin/php /var/www/{{ wordpress.host }}/wp-content/plugins/google-analytics-ranking/google-analytics-ranking-job.php >/dev/null 2>&1"
+    state: present
+  tags: crontab
+
+- name: wp-hatena-bookmark
+  cron:
+    name: wp-hatena-bookmark
+    user: "{{ user.name }}"
+    hour: "5"
+    minute: "10"
+    job: "/usr/bin/php /home/{{ user.name }}/php/hatena-bookmark-new.php >/dev/null 2>&1"
+    state: present
+  tags: crontab
+
+- name: cashbook
+  cron:
+    name: cashbook
+    user: "{{ user.name }}"
+    day: "1"
+    hour: "0"
+    minute: "0"
+    job: "/usr/bin/php /var/www/{{ cashbook.host }}/current/app/console app:regular-payment --env: prod >/dev/null 2>&1"
+    state: present
+  tags: crontab
+
+- name: certbot renew
+  cron:
+    name: certbot-renew
+    user: root
+    weekday: "0"
+    hour: "6"
+    minute: "0"
+    job: "certbot renew --pre-hook 'service nginx stop' --post-hook 'service nginx start'"
+    state: present
+  tags: crontab
