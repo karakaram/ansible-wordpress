@@ -14,7 +14,7 @@ server {
     ssl_certificate /etc/nginx/ssl/server.pem;
     ssl_certificate_key /etc/nginx/ssl/server.key;
 
-    ssl_session_cache shared:SSL:10m;
+    ssl_session_cache shared:SSL:1m;
     ssl_session_timeout  5m;
 
     ssl_ciphers 'EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH !RC4';
@@ -36,7 +36,7 @@ server {
 
     location ~ ^/app\.php(/|$) {
         expires        off;
-        fastcgi_pass   phpfpm;
+        fastcgi_pass   127.0.0.1:9000;
         fastcgi_split_path_info ^(.+\.php)(/.*)$;
         include fastcgi_params;
         fastcgi_param  SCRIPT_FILENAME  $realpath_root$fastcgi_script_name;
