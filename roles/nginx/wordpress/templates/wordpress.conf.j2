@@ -130,7 +130,7 @@ server {
         fastcgi_read_timeout 120s;
         #add_header Strict-Transport-Security "max-age=31536000";
 
-        set $do_not_cache 1; ## page cache
+        set $do_not_cache 0; ## page cache
         set $device "pc";
 
         if ($request_method = POST) {
