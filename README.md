@@ -3,13 +3,15 @@
 ## Requirement
 
 - CentOS 7.4
-- Python 3.6
-- Ansible 2.4.2
-    - passlib python module
+- pyenv
+- pipenv
 
 ## Usage
 
 ```
+pyenv install
+pipenv install
+pipenv shell
 echo ${your vaults password} > ~/.ansible_vault_password
 cp server.pem roles/nginx/files
 cp server.key roles/nginx/files
