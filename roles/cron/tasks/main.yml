@@ -34,7 +34,6 @@
   cron:
     name: wp-social-share-count
     user: "{{ user.name }}"
-    hour: "2,14"
     minute: "0"
     job: "/usr/bin/php /var/www/{{ wordpress.host }}/wp-content/plugins/social-share-count-db/social-share-count-db-job.php >/dev/null 2>&1"
     state: present
