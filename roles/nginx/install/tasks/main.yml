@@ -50,7 +50,7 @@
 - name: change permission for log files
   file:
     path: /var/log/nginx
-    owner: "{{ user.name }}"
+    owner: nginx
     group: nginx
     state: directory
   tags:
@@ -61,7 +61,7 @@
   lineinfile:
     dest: /etc/logrotate.d/nginx
     regexp: "^(\\s*)create"
-    line: "\\1create 644 nginx {{ user.name }}"
+    line: "\\1create 644 nginx nginx"
     backrefs: yes
   tags:
     - nginx
