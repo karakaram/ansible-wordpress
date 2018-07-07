@@ -52,22 +52,23 @@
     path: /var/log/nginx
     owner: nginx
     group: nginx
+    mode: 755
     state: directory
   tags:
     - nginx
     - nginx-change-permission-log-directory
 
-- name: change create in logrotate
+- name: change postrotate in /etc/logrotate.d/nginx
   lineinfile:
     dest: /etc/logrotate.d/nginx
-    regexp: "^(\\s*)create"
-    line: "\\1create 644 nginx nginx"
+    regexp: "/bin/kill -USR1 `cat /run/nginx.pid*"
+    line: "/sbin/nginx -s reopen >/dev/null 2>&1 || true"
     backrefs: yes
   tags:
     - nginx
     - nginx-install
 
-- name: change rotate in logrotate
+- name: change rotate in /etc/logrotate.d/nginx
   lineinfile:
     dest: /etc/logrotate.d/nginx
     regexp: "^(\\s*)rotate"
