@@ -22,18 +22,18 @@
   notify: restart php-fpm
   tags: php
 
-# - name: copy logrotate
-#   template:
-#     src: logrotate-php-fpm.j2
-#     dest: /etc/logrotate.d/php-fpm
-#   tags: php
+ - name: copy logrotate
+   template:
+     src: logrotate-php-fpm.j2
+     dest: /etc/logrotate.d/php-fpm
+   tags: php
 
 - name: create log directory
   file:
     path: /var/log/php
     state: directory
-    mode: 0775
-    owner: nginx
+    mode: 0755
+    owner: "{{ user.name }}"
     group: "{{ user.name }}"
     recurse: yes
   tags: php
@@ -42,9 +42,9 @@
   file:
     path: "{{ item }}"
     state: directory
-    mode: 0775
+    mode: 0755
     owner: nginx
-    group: "{{ user.name }}"
+    group: nginx
   with_items:
     - /var/log/php-fpm
   tags: php
