@@ -21,30 +21,24 @@
   notify: restart firewalld
   tags: nginx
 
-- name: create ssl directory
-  file:
-    path: /etc/nginx/ssl
-    state: directory
-  tags: nginx
-
 - name: copy ssl_certificate
   copy:
     src: server.pem
-    dest: /etc/nginx/ssl/server.pem
+    dest: /etc/nginx/server.pem
   notify: restart nginx
   tags: nginx
 
 - name: copy ssl_certificate_key
   copy:
     src: server.key
-    dest: /etc/nginx/ssl/server.key
+    dest: /etc/nginx/server.key
   notify: restart nginx
   tags: nginx
 
 - name: copy dhparam.pem
   copy:
     src: dhparam.pem
-    dest: /etc/nginx/ssl/dhparam.pem
+    dest: /etc/nginx/dhparam.pem
   notify: restart nginx
   tags: nginx
 

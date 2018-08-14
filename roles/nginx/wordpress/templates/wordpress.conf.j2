@@ -20,9 +20,9 @@ server {
     listen 443 ssl http2;
     server_name {{ wordpress.host }};
 
-    ssl_certificate     /etc/nginx/ssl/server.pem;
-    ssl_certificate_key /etc/nginx/ssl/server.key;
-    ssl_dhparam /etc/nginx/ssl/dhparam.pem;
+    ssl_certificate     /etc/nginx/server.pem;
+    ssl_certificate_key /etc/nginx/server.key;
+    ssl_dhparam /etc/nginx/dhparam.pem;
 
     #ssl_session_tickets     on;
     #ssl_session_ticket_key     /etc/kusanagi.d/ssl_sess_ticket.key;
